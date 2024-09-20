@@ -1,12 +1,9 @@
 
 import { useEffect, useState } from 'react';
 import Post from './Post';
-import NewPost from './NewPost';
-import Modal from './Modal';
 import classes from './PostList.module.css';
-import { DiVim } from 'react-icons/di';
 
-function PostsList({ isPosting, onStopPosting }) {
+function PostsList() {
     fetch('http://localhost:8080/posts');
     const [posts, setPosts] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
@@ -36,18 +33,12 @@ function PostsList({ isPosting, onStopPosting }) {
 
     return (
         <>
-            {isPosting ? (<Modal onClose={onStopPosting}>
-                <NewPost
-                    onCancle={onStopPosting} onPostAdd={addPostHandler}
-                />
-            </Modal>
-            ) : false}
             {!isFetching && posts.length > 0 && (
                 <ul className={classes.posts}>
-                    {posts.map((post) => <Post key={post.body} author={post.author} body={post.body} />)}
+                    {posts.map((post) => <Post key={post.id} id={post.id} author={post.author} body={post.body} />)}
                 </ul>
             )}
-            {!isFetching && posts.length === 0 && <div style={{ textAlign: 'center', color: 'white' }}>
+            {!isFetching && posts.length === 0 && <div style={{ textAlign: 'center', color: 'Black' }}>
                 <h2>There are no posts yet...</h2>
                 <p>Start adding some Post!!</p>
             </div>}
